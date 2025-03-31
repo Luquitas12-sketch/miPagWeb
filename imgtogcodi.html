@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertir Imagen a G-code</title>
+</head>
+<body>
+    <h2>Sube tu imagen para convertirla en G-code</h2>
+    <input type="file" id="imageInput">
+    <button onclick="convertToGCode()">Convertir</button>
+    
+    <h3>G-code generado:</h3>
+    <textarea id="gcodeOutput" rows="10" cols="50"></textarea>
+    <button onclick="sendGCode()">Enviar a ESP32</button>
+
+    <script>
+        function convertToGCode() {
+            let gcode = "G21\nG90\nG1 X10 Y10 F3000\nG1 X20 Y20 F3000\nM30";
+            document.getElementById("gcodeOutput").value = gcode;
+        }
+
+        function sendGCode() {
+            let gcodeText = document.getElementById("gcodeOutput").value;
+            fetch("https://tu-servidor.com/recibir_gcode", {  // Cambia esta URL por la de tu backend
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ gcode: gcodeText })
+            }).then(response => response.text())
+            .then(data => alert("G-code enviado correctamente a la ESP32"))
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
