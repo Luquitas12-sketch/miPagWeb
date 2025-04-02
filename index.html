@@ -22,7 +22,7 @@
 
         function sendGCode() {
             let gcodeText = document.getElementById("gcodeOutput").value;
-            fetch("http://192.168.100.7:5000/recibir_gcode", {  // Cambia esta URL por la de tu backend
+            fetch("http://192.168.1.201:5000/recibir_gcode", {  // Cambia esta URL por la de tu backend
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ gcode: gcodeText })
